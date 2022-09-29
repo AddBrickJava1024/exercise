@@ -7,9 +7,6 @@ import cn.cdtu.util.EquationType;
 import cn.cdtu.util.ExerciseType;
 import cn.cdtu.util.MyUtils;
 import cn.cdtu.util.OperatorType;
-import javafx.beans.binding.LongExpression;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -23,24 +20,40 @@ import java.util.HashSet;
 public class ExerciseServiceImpl implements ExerciseService {
      @Override
      public Equation generateEquation(EquationType type, long minOperand, long maxOperand, int amount) {
+         switch (type) {
+             case ADD:
+                 return generateAdd(minOperand,maxOperand,amount);
+             case SUB:
+                 return generateSub(minOperand,maxOperand,amount);
+         }
+
          return null;
      }
 
      @Override
-     public HashSet<Equation> generateEquations(ExerciseType exerciseType, EquationType equationType, long min, long max, int amount) {
-         return null;
-     }
+     public Exercise generateExercise(ExerciseType exerciseType, long min, long max, int operandAmount, int amount) {
+         HashSet<Equation> equations = new HashSet<>(amount);
 
-     /**
-      * 生成加减混合的算式
-      * @param min 操作数以及结果最小值
-      * @param max 操作数以及结果最大值
-      * @param amount 操作数多少
-      * @return 题目
-      */
-    public Equation generateAddSub(long min, long max, int amount) {
-        return null;
-    }
+         while (equations.size() < amount) {
+             switch (exerciseType) {
+                 case ADD:
+                     equations.add(generateEquation(EquationType.ADD,min,max,operandAmount));
+                     break;
+                 case SUB:
+                     equations.add(generateEquation(EquationType.SUB,min,max,operandAmount));
+                     break;
+                 case ADD_OR_SUB:
+                     if (MyUtils.random(0,1) == 1) {
+                         equations.add(generateEquation(EquationType.ADD,min,max,operandAmount));
+                     } else {
+                         equations.add(generateEquation(EquationType.SUB,min,max,operandAmount));
+                     }
+                     break;
+             }
+         }
+
+         return new Exercise(equations,exerciseType);
+     }
 
      /**
       * 生成全减的算式
@@ -57,25 +70,32 @@ public class ExerciseServiceImpl implements ExerciseService {
              temp = MyUtils.random(min*amount,max);
              operands.add(temp);
              for (int i = 1; i < amount; i++) {
-                 operands.add(MyUtils.random(min,temp-min*(amount-i-1)));
+                 operands.add(MyUtils.random(min,temp-min*(amount-i)));
                  temp -= operands.get(i);
              }
          } else if (max <= 0) {
-             temp = MyUtils.random(min,max);
-             ArrayList<Long> opTemp = generateOperandsAdd(-temp, -max, -min, amount);
-             for (int i = 0; i < amount; i++) {
-                 opTemp.set(i,-opTemp.get(i));
+             long minTmp = -max;
+             long maxTmp = -min;
+             temp = MyUtils.random(minTmp*amount,maxTmp);
+             operands.add(temp);
+             for (int i = 1; i < amount; i++) {
+                 operands.add(MyUtils.random(minTmp,temp-minTmp*(amount-i)));
+                 temp -= operands.get(i);
              }
-             operands.addAll(opTemp);
+
+             for (int i = 0; i < amount; i++) {
+                 operands.set(i,-operands.get(i));
+             }
          } else {
              long more = -min;
              long maxChange = max + more;
              temp = MyUtils.random(more*(amount-1),more*amount+max);
 
-             operands = generateOperandsAdd(temp, 0, maxChange, amount);
+             operands.add(temp-amount*more);
+             ArrayList<Long> operandsTmp = generateOperandsAdd(temp, 0, maxChange, amount);
 
-             for (int i = 0; i < amount; i++) {
-                 operands.set(i,operands.get(i)-more);
+             for (int i = 0; i < amount-1; i++) {
+                 operands.add(operandsTmp.get(i)-more);
              }
          }
 
@@ -105,12 +125,16 @@ public class ExerciseServiceImpl implements ExerciseService {
                 temp -= operands.get(i);
             }
         } else if (max <= 0) {
-            temp = MyUtils.random(min,max*amount);
-            ArrayList<Long> opTemp = generateOperandsAdd(-temp, -max, -min, amount);
+            long minTmp = -max;
+            long maxTmp = -min;
+            temp = MyUtils.random(minTmp*amount,maxTmp);
             for (int i = 0; i < amount; i++) {
-                opTemp.set(i,-opTemp.get(i));
+                operands.add(MyUtils.random(minTmp,temp-minTmp*(amount-i-1)));
+                temp -= operands.get(i);
             }
-            operands.addAll(opTemp);
+            for (int i = 0; i < amount; i++) {
+                operands.set(i,-operands.get(i));
+            }
         } else {
             long more = -min;
             long maxChange = max + more;
@@ -132,21 +156,21 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
      /**
-      * 根据数值，产生范围内的操作数，全非负整数操作
-      * @param value 总值
-      * @param min 操作数最小值
-      * @param max 操作数最大值
-      * @param amount 操作数个数
-      * @return
+      * 生成能够凑成某个数的 指定数量并且符合范围的数字（所有参数均为非付整数）
+      * @param value 被凑的数
+      * @param min 凑数的最小值
+      * @param max 凑数最大值
+      * @param amount 凑数个数
+      * @return 凑数集合
       */
     public ArrayList<Long> generateOperandsAdd(long value, long min,long max,int amount) {
         if (value > max*amount || value < min*amount || amount == 0) return null;
-        long more = max * amount - value;
 
         ArrayList<Long> operands = null;
         int flag = 0;
 
         while (flag == 0) {
+            long more = max * amount - value;
             operands = new ArrayList<>(amount);
             for (int i = 0; i < amount; i++) {
                 operands.add(max);
@@ -158,13 +182,16 @@ public class ExerciseServiceImpl implements ExerciseService {
                 more--;
             }
 
+            int flagTmp = 1;
             for (int i = 0; i < amount; i++) {
                 long operand = operands.get(i);
-                if (!(operand < min || operand > max)) {
-                    flag = 1;
+                if (operand < min) {
+                    flagTmp = 0;
                     break;
                 }
             }
+
+            flag = flagTmp;
         }
 
         return  operands;
