@@ -14,7 +14,8 @@ import java.util.Objects;
  */
 public class Equation {
     // 试题包含的操作数
-    private ArrayList<Long> operands;
+    public  ArrayList<Long> operands;
+//    private ArrayList<Long> operands;
     // 试题包含的操作符
     private ArrayList<OperatorType> operators;
     // 试题的类型

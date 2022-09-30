@@ -12,7 +12,7 @@ import org.junit.Assert;
  */
 public class MyUtilsTest extends TestCase {
 
-    //测试需求17，total为试题总数，numCol为输出的每一行的列数
+    //需求17，total为试题总数，numCol为输出的每一行的列数
     public void testGenerateAddAndSUB(){
         final No17 no17 = new No17();
         no17.generateAddAndSUB(59,3);

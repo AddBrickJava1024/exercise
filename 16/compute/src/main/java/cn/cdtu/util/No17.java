@@ -4,7 +4,7 @@ package cn.cdtu.util;
 import cn.cdtu.pojo.Equation;
 import cn.cdtu.service.impl.ExerciseServiceImpl;
 
-//需求17
+//需求17:产生3个数值的二元运算
 public class No17 {
 
     ExerciseServiceImpl service = new ExerciseServiceImpl();
