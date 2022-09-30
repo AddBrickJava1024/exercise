@@ -1,6 +1,7 @@
 package cn.cdtu.service;
 
 import cn.cdtu.pojo.Equation;
+import cn.cdtu.pojo.Exercise;
 import cn.cdtu.util.EquationType;
 import cn.cdtu.util.ExerciseType;
 
@@ -28,11 +29,11 @@ public interface ExerciseService {
     /**
      * 产生一套试卷
      * @param exerciseType 试卷类型
-     * @param equationType 试题类型
      * @param min 试题操作数以及运算结果最小值
      * @param max 试题操作数以及运算结果最大值
-     * @param amount 试题操作数量
+     * @param operandAmount 试题操作数量
+     * @param amount 试题数量
      * @return 试题
      */
-    HashSet<Equation> generateEquations(ExerciseType exerciseType, EquationType equationType, long min, long max, int amount);
+    Exercise generateExercise(ExerciseType exerciseType, long min, long max, int operandAmount, int amount);
 }

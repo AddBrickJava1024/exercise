@@ -1,7 +1,6 @@
 package cn.cdtu.pojo;
 
 import cn.cdtu.util.ExerciseType;
-
 import java.util.HashSet;
 
 /**
@@ -12,15 +11,12 @@ import java.util.HashSet;
  * version 1.0
  */
 public class Exercise {
-    // 试卷名
-    public String name;
     // 试卷包含的题目
-    public HashSet<Equation> equations;
+    private HashSet<Equation> equations;
     // 试卷类型
-    public ExerciseType type;
+    private ExerciseType type;
 
-    public Exercise(String name, HashSet<Equation> equations, ExerciseType type) {
-        this.name = name;
+    public Exercise(HashSet<Equation> equations, ExerciseType type) {
         this.equations = equations;
         this.type = type;
     }
@@ -31,18 +27,9 @@ public class Exercise {
     @Override
     public String toString() {
         return "Exercise{" +
-                "name='" + name + '\'' +
-                ", equations=" + equations +
+                "equations=" + equations +
                 ", type=" + type +
                 '}';
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public HashSet<Equation> getEquations() {
