@@ -1,6 +1,8 @@
 package cn.cdtu.util;
 
+import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author makun
@@ -33,5 +35,27 @@ public class MyUtils {
                 return random(0,max);
             }
         }
+    }
+
+
+    /**
+     * 将字符串打印在文件中
+     * @param content 字符串内容
+     * @param path 存放路径
+     * @param fileName 文件名
+     * @param isAppend 是否追加
+     * @return
+     */
+    public static boolean printToFile(String content, String path, String fileName, boolean isAppend) {
+        if (!new File(path).isDirectory()) return false;
+
+        try (FileOutputStream out = new FileOutputStream(path + File.separator  + fileName + ".txt",isAppend)) {
+            out.write(content.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

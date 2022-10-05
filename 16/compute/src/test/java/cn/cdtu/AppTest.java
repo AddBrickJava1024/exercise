@@ -3,7 +3,10 @@ package cn.cdtu;
 import cn.cdtu.pojo.Exercise;
 import cn.cdtu.proxy.ExerciseProxy;
 import cn.cdtu.util.ExerciseType;
+import cn.cdtu.util.MyUtils;
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class AppTest extends TestCase {
     ExerciseProxy proxy = new ExerciseProxy(1L,100L, ExerciseType.ADD);
@@ -102,5 +105,19 @@ public class AppTest extends TestCase {
         Exercise exercise = proxy.generateExercise(10);
         String paper = proxy.generatePaper(exercise, 6, true);
         System.out.println(paper);
+    }
+
+    /**
+     * 测试将字符串打印到文件的功能
+     */
+    public void testDiy01() {
+        String path = "C:\\Users\\makun\\Desktop";
+        String fileName = "exercise";
+
+        ExerciseProxy proxy = new ExerciseProxy(0L,100L, ExerciseType.ADD);
+        proxy.setOperandAmount(3);
+        Exercise exercise = proxy.generateExercise(120);
+        String paper = proxy.generatePaper(exercise,5,true);
+        Assert.assertEquals(true, MyUtils.printToFile(paper,path,fileName,false));
     }
 }

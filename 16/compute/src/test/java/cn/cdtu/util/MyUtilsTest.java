@@ -17,4 +17,14 @@ public class MyUtilsTest extends TestCase {
         final No17 no17 = new No17();
         no17.generateAddAndSUB(59,3);
     }
+
+    // 测试一下能否打印到文件
+    public void testPrintToFile() {
+        String path = "C:\\Users\\makun\\Desktop";
+        String fileName = "test.java";
+        String content = "这是一段内容";
+
+        boolean b = MyUtils.printToFile(content, path, fileName, true);
+        System.out.println(b);
+    }
 }
