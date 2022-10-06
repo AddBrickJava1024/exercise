@@ -65,7 +65,7 @@ public class AppTest extends TestCase {
     }
 
     /**
-     * 不是随机产生吗？怎么会有输入
+     * 此案例的实现不支持输入
      */
     public void test20() {
         assertTrue( true );
