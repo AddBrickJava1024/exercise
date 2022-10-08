@@ -22,7 +22,7 @@ public class App2 {
         int column = 2;
         int choose = 0;
         while (flag) {
-            System.out.print("当前试卷生成器状态：每行算式数量：" + column + " ");
+            System.out.print("当前试题生成器状态：每行算式数量：" + column + " ");
             System.out.println(proxy);
             System.out.println("*****************************请输入对应数字选择服务***********************");
             System.out.println("************** 1.修改最小值     ***************** 2.修改最大值   ********");
