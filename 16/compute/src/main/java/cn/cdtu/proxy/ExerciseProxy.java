@@ -61,7 +61,13 @@ public class ExerciseProxy {
             sb.append("、");
             int i = 0;
             for (; i < operands.size()-1; i++) {
-                sb.append(String.format("%4d",operands.get(i)));
+                long operand = operands.get(i);
+                if (operand < 0 && i != 0) {
+                    sb.append(String.format("%6s","(" + operand + ")"));
+                } else {
+                    sb.append(String.format("%6d",operand));
+                }
+
                 switch (operatorTypes.get(i)) {
                     case ADD:
                         sb.append(String.format("%3c",'+'));
@@ -71,10 +77,15 @@ public class ExerciseProxy {
                         break;
                 }
             }
-            sb.append(String.format("%4d",operands.get(i)));
+            long operand = operands.get(i);
+            if (operand < 0) {
+                sb.append(String.format("%6s","(" + operand + ")"));
+            } else {
+                sb.append(String.format("%6d",operand));
+            }
             sb.append(String.format("%3c",'='));
             if (isAnswer) {
-                sb.append(String.format("%4d",equation.getValue()));
+                sb.append(String.format("%6d",equation.getValue()));
             } else {
                 sb.append("\t");
             }
