@@ -100,6 +100,35 @@ public class ExerciseProxy {
         return service.generateExercise(type,min,max,operandAmount,amount);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("最小值：");
+        sb.append(min);
+        sb.append(" 最大值：");
+        sb.append(max);
+        sb.append(" 操作数数量：");
+        sb.append(operandAmount);
+
+        String tp = "未知";
+        switch (type) {
+            case ADD:
+                tp = "全加";
+                break;
+            case ADD_OR_SUB:
+                tp = "加或减";
+                break;
+            case SUB:
+                tp = "全减";
+                break;
+        }
+
+        sb.append(" 试题类型：");
+        sb.append(tp);
+
+        return sb.toString();
+    }
+
     public Long getMin() {
         return min;
     }

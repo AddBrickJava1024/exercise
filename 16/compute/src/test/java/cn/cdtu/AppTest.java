@@ -7,6 +7,8 @@ import cn.cdtu.util.MyUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import java.util.Scanner;
+
 public class AppTest extends TestCase {
     ExerciseProxy proxy = new ExerciseProxy(1L,100L, ExerciseType.ADD);
 
