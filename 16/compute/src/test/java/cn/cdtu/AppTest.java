@@ -4,9 +4,8 @@ import cn.cdtu.pojo.Exercise;
 import cn.cdtu.proxy.ExerciseProxy;
 import cn.cdtu.util.ExerciseType;
 import cn.cdtu.util.MyUtils;
+import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class AppTest extends TestCase {
     ExerciseProxy proxy = new ExerciseProxy(1L,100L, ExerciseType.ADD);
