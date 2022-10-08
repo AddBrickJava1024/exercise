@@ -88,8 +88,9 @@ public class AppTest extends TestCase {
      * 题数：5，7，8，19，20，21，39，40，41，99，100
      */
     public void test22() {
-        int n = 5;
-        ExerciseProxy proxy = new ExerciseProxy(0L,100L, ExerciseType.ADD_OR_SUB);
+        int n = 20;
+        ExerciseProxy proxy = new ExerciseProxy(-100L,100L, ExerciseType.ADD_OR_SUB);
+        proxy.setOperandAmount(3);
         Exercise exercise = proxy.generateExercise(n);
         String paper = proxy.generatePaper(exercise, 4, true);
         System.out.println(paper);
