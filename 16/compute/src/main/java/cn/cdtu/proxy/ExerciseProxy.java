@@ -57,35 +57,44 @@ public class ExerciseProxy {
             operands = equation.getOperands();
             operatorTypes = equation.getOperators();
 
-            sb.append(String.format("%4d",index));
+            //sb.append(String.format("%4d",index));
+            sb.append(String.format("%2d",index));
             sb.append("、");
             int i = 0;
             for (; i < operands.size()-1; i++) {
                 long operand = operands.get(i);
                 if (operand < 0 && i != 0) {
-                    sb.append(String.format("%6s","(" + operand + ")"));
+                    //sb.append(String.format("%6s","(" + operand + ")"));
+                    sb.append(String.format("%s","(" + operand + ")"));
                 } else {
-                    sb.append(String.format("%6d",operand));
+                    //sb.append(String.format("%6d",operand));
+                    sb.append(String.format("%d",operand));
                 }
 
                 switch (operatorTypes.get(i)) {
                     case ADD:
-                        sb.append(String.format("%3c",'+'));
+                        //sb.append(String.format("%3c",'+'));
+                        sb.append(String.format("%c",'+'));
                         break;
                     case SUB:
-                        sb.append(String.format("%3c",'-'));
+                        //sb.append(String.format("%3c",'-'));
+                        sb.append(String.format("%c",'-'));
                         break;
                 }
             }
             long operand = operands.get(i);
             if (operand < 0) {
-                sb.append(String.format("%6s","(" + operand + ")"));
+                //sb.append(String.format("%6s","(" + operand + ")"));
+                sb.append(String.format("%s","(" + operand + ")"));
             } else {
-                sb.append(String.format("%6d",operand));
+                //sb.append(String.format("%6d",operand));
+                sb.append(String.format("%d",operand));
             }
-            sb.append(String.format("%3c",'='));
+            //sb.append(String.format("%3c",'='));
+            sb.append(String.format("%c",'='));
             if (isAnswer) {
-                sb.append(String.format("%6d",equation.getValue()));
+                //sb.append(String.format("%6d",equation.getValue()));
+                sb.append(String.format("%d",equation.getValue()));
             } else {
                 sb.append("\t");
             }

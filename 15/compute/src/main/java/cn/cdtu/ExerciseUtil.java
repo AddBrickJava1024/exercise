@@ -61,7 +61,7 @@ public class ExerciseUtil {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-            sb.append(String.format("%-3d",left_op));
+            sb.append(String.format("%3d",left_op));
             sb.append(op);
             sb.append(String.format("%3d",right_op));
             sb.append(" = ");
