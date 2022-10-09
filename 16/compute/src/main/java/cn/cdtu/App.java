@@ -1,8 +1,6 @@
 package cn.cdtu;
 
-import cn.cdtu.proxy.ExerciseProxy;
-import cn.cdtu.util.ExerciseType;
-import cn.cdtu.util.HandleContent;
+import cn.cdtu.util.ProgramEntry;
 
 import java.lang.String;
 import java.util.Scanner;
@@ -17,38 +15,34 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
 
+        final ProgramEntry programEntry = new ProgramEntry();
+
         //appRun == false时程序结束；反之运行
         Boolean appRun = true;
         while (appRun) {
+            System.out.println("******************** 请选择您所常用的试题生成方式 ********************");
+            System.out.println("********** 1.分部输入参数获取试题 ***** 2.直接语法输入获取试题 **********");
+            System.out.println("*************************** 0.退出系统  ***************************");
 
-            System.out.println("请输入您需要的试题：(格式为：加法、减法、加减法或50道一行5列的[1,200]加法试题，\n其中50、5和[]中的数字可以任意变更。\n请务必按照正确格式输入)\n输入”退出“即可退出程序");
+            Scanner scanner = new Scanner(System.in);
+            String str = scanner.nextLine();
 
-            HandleContent handleContent = new HandleContent();
-            Scanner input = new Scanner(System.in);
-            //接收控制台输入的文字
-            String str = input.next();
-            if (!str.equals("退出")){
-                String[] questionsScope = handleContent.TestQuestionsScope(str);
-
-                //判断使用什么基本运算
-                ExerciseType exerciseType = null;
-                if (questionsScope[4] == "ExerciseType.ADD") {
-                    exerciseType = ExerciseType.ADD;
-                } else if (questionsScope[4] == "ExerciseType.SUB") {
-                    exerciseType = ExerciseType.SUB;
-                } else {
-                    exerciseType = ExerciseType.ADD_OR_SUB;
-                }
-
-                ExerciseProxy proxy = new ExerciseProxy(Long.valueOf(questionsScope[2]), Long.valueOf(questionsScope[3]), exerciseType);
-                String paper = proxy.generatePaper(proxy.generateExercise(Integer.parseInt(questionsScope[0])), Integer.parseInt(questionsScope[1]), true);
-
-                System.out.println(paper);
-
-            }else {
-                appRun=false;
+            switch (str) {
+                case "1":
+                    programEntry.branchMode();
+                    break;
+                case "2":
+                    programEntry.grammarMode();
+                    break;
+                case "0":
+                    appRun = false;
+                    break;
+                default:
+                    System.out.println("请输入正确字符串！");
+                    break;
             }
         }
+
 
     }
 }
