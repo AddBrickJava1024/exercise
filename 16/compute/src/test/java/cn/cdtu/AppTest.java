@@ -28,6 +28,7 @@ public class AppTest extends TestCase {
         System.out.println(paper);
     }
 
+
     /**
      * 可以产生最多3个数值的【0-100】的二元算式
      * 整齐打印输出5列算式
