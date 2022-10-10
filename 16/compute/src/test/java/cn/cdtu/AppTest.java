@@ -104,7 +104,7 @@ public class AppTest extends TestCase {
      */
     public void test23() {
         int n = 120;
-        ExerciseProxy proxy = new ExerciseProxy(-100L,100L, ExerciseType.ADD_OR_SUB);
+        ExerciseProxy proxy = new ExerciseProxy(-1000L,1000L, ExerciseType.ADD_OR_SUB);
         proxy.setOperandAmount(3);
         Exercise exercise = proxy.generateExercise(10);
         String paper = proxy.generatePaper(exercise, 6, true);

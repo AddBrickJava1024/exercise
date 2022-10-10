@@ -58,4 +58,20 @@ public class MyUtils {
 
         return true;
     }
+
+    /**
+     * 判断数字位数
+     * @param num 需要判断得数字
+     * @return 数字位数
+     */
+    public static int getDigit(long num) {
+        int cnt = 1;
+
+        while (num / 10 != 0) {
+            cnt++;
+            num /= 10;
+        }
+
+        return cnt;
+    }
 }

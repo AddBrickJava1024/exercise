@@ -27,4 +27,9 @@ public class MyUtilsTest extends TestCase {
         boolean b = MyUtils.printToFile(content, path, fileName, true);
         System.out.println(b);
     }
+
+    // 判断数字的位数
+    public void testGetDigit() {
+        System.out.println(MyUtils.getDigit(1));
+    }
 }

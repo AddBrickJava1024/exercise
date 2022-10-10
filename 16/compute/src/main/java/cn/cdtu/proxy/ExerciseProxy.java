@@ -5,6 +5,7 @@ import cn.cdtu.pojo.Exercise;
 import cn.cdtu.service.ExerciseService;
 import cn.cdtu.service.impl.ExerciseServiceImpl;
 import cn.cdtu.util.ExerciseType;
+import cn.cdtu.util.MyUtils;
 import cn.cdtu.util.OperatorType;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,6 +43,7 @@ public class ExerciseProxy {
      */
     public String generatePaper(Exercise exercise,int column,boolean isAnswer) {
         if (exercise == null || exercise.getEquations() == null) return null;
+        int digit = Math.max(MyUtils.getDigit(min),MyUtils.getDigit(max));
 
         HashSet<Equation> equations = exercise.getEquations();
         StringBuilder sb = new StringBuilder();
@@ -57,49 +59,40 @@ public class ExerciseProxy {
             operands = equation.getOperands();
             operatorTypes = equation.getOperators();
 
-            //sb.append(String.format("%4d",index));
-            sb.append(String.format("%2d",index));
+            sb.append(String.format("%"+MyUtils.getDigit(equations.size())+"d",index));
             sb.append("、");
             int i = 0;
             for (; i < operands.size()-1; i++) {
                 long operand = operands.get(i);
                 if (operand < 0 && i != 0) {
-                    //sb.append(String.format("%6s","(" + operand + ")"));
-                    sb.append(String.format("%s","(" + operand + ")"));
+                    sb.append(String.format("%" + (digit+2) +"s","(" + operand + ")"));
                 } else {
-                    //sb.append(String.format("%6d",operand));
-                    sb.append(String.format("%d",operand));
+                    sb.append(String.format("%" + (digit+2) + "d",operand));
                 }
 
                 switch (operatorTypes.get(i)) {
                     case ADD:
-                        //sb.append(String.format("%3c",'+'));
-                        sb.append(String.format("%c",'+'));
+                        sb.append(String.format("%3c",'+'));
                         break;
                     case SUB:
-                        //sb.append(String.format("%3c",'-'));
-                        sb.append(String.format("%c",'-'));
+                        sb.append(String.format("%3c",'-'));
                         break;
                 }
             }
             long operand = operands.get(i);
             if (operand < 0) {
-                //sb.append(String.format("%6s","(" + operand + ")"));
-                sb.append(String.format("%s","(" + operand + ")"));
+                sb.append(String.format("%" + (digit+2) +"s","(" + operand + ")"));
             } else {
-                //sb.append(String.format("%6d",operand));
-                sb.append(String.format("%d",operand));
+                sb.append(String.format("%" + (digit+2) + "d",operand));
             }
-            //sb.append(String.format("%3c",'='));
-            sb.append(String.format("%c",'='));
+            sb.append(String.format("%4s","= "));
             if (isAnswer) {
-                //sb.append(String.format("%6d",equation.getValue()));
-                sb.append(String.format("%d",equation.getValue()));
+                sb.append(String.format("%" + digit + "d",equation.getValue()));
             } else {
-                sb.append("\t");
+                sb.append("\t\t");
             }
             if (round < column) {
-                sb.append("\t");
+                sb.append("\t\t");
                 round++;
             } else {
                 sb.append("\n");

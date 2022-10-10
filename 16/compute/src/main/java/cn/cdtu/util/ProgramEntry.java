@@ -2,7 +2,7 @@ package cn.cdtu.util;
 
 import cn.cdtu.pojo.Exercise;
 import cn.cdtu.proxy.ExerciseProxy;
-import junit.framework.Assert;
+
 
 
 import java.util.Scanner;
